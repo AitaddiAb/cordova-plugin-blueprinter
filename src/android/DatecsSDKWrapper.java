@@ -336,7 +336,7 @@ public class DatecsSDKWrapper {
      */
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device, UUID uuid, final CallbackContext callbackContext) throws IOException {
         try {
-            Method method = device.getClass().getMethod("createRfcommSocketToServiceRecord", new Class[] { UUID.class });
+            Method method = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
             return (BluetoothSocket) method.invoke(device, uuid);
         } catch (Exception e) {
             e.printStackTrace();
@@ -344,7 +344,7 @@ public class DatecsSDKWrapper {
             callbackContext.error(this.getErrorByCode(19));
             showError(DatecsUtil.getStringFromStringResource(app, "failed_to_comm") + ": " + e.getMessage(), false);
         }
-        return device.createRfcommSocketToServiceRecord(uuid);
+        return device.createInsecureRfcommSocketToServiceRecord(uuid);
     }
 
     /**
